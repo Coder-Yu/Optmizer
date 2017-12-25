@@ -11,8 +11,8 @@ class Regression(object):
 
     def readData(self,filename):
         #preproccessing
-        maxVal = [-1000]*5
-        minVal = [1000]*5
+        maxVal = [-1000]*8
+        minVal = [1000]*8
         data = []
         with open(filename) as f:
             for line in f:
@@ -38,7 +38,7 @@ class Regression(object):
 
     def run(self):
         start = time()
-        o2_weights,o1_weights,bias = self.optimizer.update(data=self.trainingSet, o2_weights=np.ones(5)/10, o1_weights=np.ones(5)/10, bias=0.1)
+        o2_weights,o1_weights,bias = self.optimizer.update(data=self.trainingSet, o2_weights=np.ones(8)/10, o1_weights=np.ones(8)/10, bias=0.1)
         #prediction
         error = 0
         for instance in self.testSet:
@@ -57,7 +57,7 @@ class Regression(object):
 
 if __name__ == '__main__':
     #generate data
-    # o3_weights = np.random.rand(5) * 5
+    # o3_weights = np.random.rand(5)*5
     # o2_weights = np.random.rand(5)*5
     # o1_weights = np.random.rand(5)*5
     # bias = random()*5
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # samples = []
     # for i in range(10000):
     #     sample = np.random.rand(5)*3
-    #     y = o3_weights.dot(sample*sample*sample)+o2_weights.dot(sample*sample)+o1_weights.dot(sample)+bias+gauss(3,3)
+    #     y = o3_weights.dot(sample*sample*sample)+o2_weights.dot(sample*sample)+o1_weights.dot(sample)+bias+gauss(10,3)
     #     line = list(np.array(sample,dtype='str'))
     #     line.append(str(y))
     #     samples.append(','.join(line)+'\n')
@@ -97,3 +97,50 @@ if __name__ == '__main__':
     momentum.readParameters('config.conf')
     task2.getOptimizer(momentum)
     task2.run()
+
+
+    #plot
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import seaborn as sns
+
+
+    def drawLine(x, y, labels, xLabel, yLabel, title):
+        f, ax = plt.subplots(1, 1, figsize=(15, 10), sharex=True)
+
+        # f.tight_layout()
+        #sns.set(style="darkgrid")
+
+        palette = [ 'red', 'green', 'purple', 'pink','blue', 'orange',]
+
+
+        for ydata, lab, c in zip(y, labels, palette):
+            ax.plot(x, ydata, color=c, label=lab,linewidth=3)
+        # ind = np.arange(0, 60, 10)
+        # ax.set_xticks(ind)
+        # ax.set_xticklabels(x)
+        ax.set_xlabel(xLabel, fontsize=22)
+        ax.set_ylabel(yLabel, fontsize=22)
+        ax.tick_params(labelsize=20)
+        # ax.tick_params(axs='y', labelsize=20)
+
+        ax.set_title(title, fontsize=24)
+        plt.grid(True)
+        handles, labels1 = ax.get_legend_handles_labels()
+
+        # ax[i].legend(handles, labels1, loc=2, fontsize=20)
+        # ax.legend(loc=2,
+        #        ncol=6,  borderaxespad=0.,fontsize=20)
+        # ax[2].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,fontsize=20)
+        ax.legend(loc='upper right', fontsize=20, shadow=True)
+        plt.show()
+        plt.close()
+
+
+    labels = ['SGD', 'BGD', 'Momentum', ]
+    xlabel = 'Iteration'
+    ylabel = 'Loss'
+    x = [i for i in range(sgd.epoch+1)]
+    y = [sgd.lossRecord,bgd.lossRecord,momentum.lossRecord]
+    drawLine(x, y, labels, xlabel, ylabel, 'Comparison of Different Optimization Methods')

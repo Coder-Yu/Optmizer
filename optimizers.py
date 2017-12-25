@@ -17,7 +17,7 @@ class SGD(Optimizer):
     "Stochastic Gradient Descent Method"
     def readParameters(self,filename):
         settings = LineConfig(Config(fileName=filename)['SGD'])
-        self.epoch = float(settings['-epoch'])
+        self.epoch = int(settings['-epoch'])
         self.step = float(settings['-step'])
         self.reg = float(settings['-reg'])
         self.name = 'SGD'
@@ -51,7 +51,7 @@ class BGD(Optimizer):
 
     def readParameters(self, filename):
         settings = LineConfig(Config(fileName=filename)['BGD'])
-        self.epoch = float(settings['-epoch'])
+        self.epoch = int(settings['-epoch'])
         self.step = float(settings['-step'])
         self.reg = float(settings['-reg'])
         self.batch = int(settings['-batch'])
@@ -96,7 +96,7 @@ class Momentum(Optimizer):
     "Stochastic Gradient Descent Method With Momentum"
     def readParameters(self,filename):
         settings = LineConfig(Config(fileName=filename)['Momentum'])
-        self.epoch = float(settings['-epoch'])
+        self.epoch = int(settings['-epoch'])
         self.step = float(settings['-step'])
         self.gamma = float(settings['-gamma'])
         self.reg = float(settings['-reg'])
