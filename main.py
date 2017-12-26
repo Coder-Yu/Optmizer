@@ -133,7 +133,7 @@ if __name__ == '__main__':
         # ax.tick_params(axs='y', labelsize=20)
 
         ax.set_title(title, fontsize=24)
-        ax.set_ylim(30000,140000)
+        #ax.set_ylim(30000,140000)
         plt.grid(True)
         handles, labels1 = ax.get_legend_handles_labels()
 
