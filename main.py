@@ -91,12 +91,19 @@ if __name__ == '__main__':
     task2.getOptimizer(bgd)
     task2.run()
     #Momentum
-    task2 = Regression()
-    task2.readData('data.txt')
+    task3 = Regression()
+    task3.readData('data.txt')
     momentum = Momentum()
     momentum.readParameters('config.conf')
-    task2.getOptimizer(momentum)
-    task2.run()
+    task3.getOptimizer(momentum)
+    task3.run()
+    #NAG
+    task4 = Regression()
+    task4.readData('data.txt')
+    nag = NAG()
+    nag.readParameters('config.conf')
+    task4.getOptimizer(nag)
+    task4.run()
 
 
     #plot
@@ -112,7 +119,7 @@ if __name__ == '__main__':
         # f.tight_layout()
         #sns.set(style="darkgrid")
 
-        palette = [ 'red', 'green', 'purple', 'pink','blue', 'orange',]
+        palette = [ 'red', 'green', 'purple', '#0F90FF','pink','blue', 'orange',]
 
 
         for ydata, lab, c in zip(y, labels, palette):
@@ -126,6 +133,7 @@ if __name__ == '__main__':
         # ax.tick_params(axs='y', labelsize=20)
 
         ax.set_title(title, fontsize=24)
+        ax.set_ylim(30000,140000)
         plt.grid(True)
         handles, labels1 = ax.get_legend_handles_labels()
 
@@ -138,9 +146,9 @@ if __name__ == '__main__':
         plt.close()
 
 
-    labels = ['SGD', 'BGD', 'Momentum', ]
+    labels = ['SGD', 'BGD', 'Momentum','NAG' ]
     xlabel = 'Iteration'
     ylabel = 'Loss'
     x = [i for i in range(sgd.epoch+1)]
-    y = [sgd.lossRecord,bgd.lossRecord,momentum.lossRecord]
+    y = [sgd.lossRecord,bgd.lossRecord,momentum.lossRecord,nag.lossRecord]
     drawLine(x, y, labels, xlabel, ylabel, 'Comparison of Different Optimization Methods')
