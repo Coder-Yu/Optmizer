@@ -3,6 +3,8 @@ import numpy as np
 from math import sqrt
 from random import random,gauss
 from time import time
+
+featuresCount = 8
 class Regression(object):
     def __init__(self):
         self.optimizer = None
@@ -11,8 +13,8 @@ class Regression(object):
 
     def readData(self,filename):
         #preproccessing
-        maxVal = [-1000]*8
-        minVal = [1000]*8
+        maxVal = [-1000]*featuresCount
+        minVal = [1000]*featuresCount
         data = []
         with open(filename) as f:
             for line in f:
@@ -38,7 +40,7 @@ class Regression(object):
 
     def run(self):
         start = time()
-        o2_weights,o1_weights,bias = self.optimizer.update(data=self.trainingSet, o2_weights=np.ones(8)/10, o1_weights=np.ones(8)/10, bias=0.1)
+        o2_weights,o1_weights,bias = self.optimizer.update(data=self.trainingSet, o2_weights=np.ones(featuresCount)/10, o1_weights=np.ones(featuresCount)/10, bias=0.1)
         #prediction
         error = 0
         for instance in self.testSet:
